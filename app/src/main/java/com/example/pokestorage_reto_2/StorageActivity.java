@@ -52,7 +52,12 @@ public class StorageActivity extends AppCompatActivity implements View.OnClickLi
         layoutManager = new LinearLayoutManager(this);
         pokemonList.setLayoutManager(layoutManager);
 
-        main = new Main(new ArrayList<Pokemon>());
+        if(getIntent().hasExtra("main")){
+            main = getIntent().getParcelableExtra("main");
+        }else{
+            main = new Main(new ArrayList<Pokemon>());
+        }
+
         String user = getIntent().getExtras().getString("username");
 
         trainer = main.getTrainer(user);

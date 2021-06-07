@@ -25,11 +25,12 @@ public class Pokemon implements Parcelable {
     }
 
     protected Pokemon(Parcel in) {
+        stats = in.createTypedArray(Stats.CREATOR);
+        types = in.createTypedArray(Types.CREATOR);
         id = in.readInt();
         name = in.readString();
         sprites = in.readParcelable(Sprites.class.getClassLoader());
-        types = in.createTypedArray(Types.CREATOR);
-        stats = in.createTypedArray(Stats.CREATOR);
+
     }
 
     public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
@@ -92,11 +93,11 @@ public class Pokemon implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(sprites, flags);
-        dest.writeTypedArray(types, flags);
         dest.writeTypedArray(stats, flags);
+        dest.writeTypedArray(types, flags);
         dest.writeInt(id);
         dest.writeString(name);
+        dest.writeParcelable(sprites, flags);
 
     }
 }

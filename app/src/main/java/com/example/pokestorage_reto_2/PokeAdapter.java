@@ -32,6 +32,11 @@ public class PokeAdapter extends RecyclerView.Adapter<PokemonView> {
         this.notifyDataSetChanged();
     }
 
+    public void deletePoke(Pokemon poke){
+        pokemon.remove(poke);
+        this.notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public PokemonView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
