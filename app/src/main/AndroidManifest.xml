@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pokestorage_reto_2">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ernesto_reto_2">
-        <activity android:name="com.example.pokestorage_reto_2.StorageActivity"></activity>
-        <activity android:name="com.example.pokestorage_reto_2.MainActivity">
+        <activity android:name=".PokemonActivity"></activity>
+        <activity android:name=".StorageActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

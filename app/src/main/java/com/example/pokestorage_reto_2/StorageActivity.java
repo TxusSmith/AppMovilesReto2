@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class StorageActivity extends AppCompatActivity implements View.OnClickListener{
+public class StorageActivity extends AppCompatActivity implements View.OnClickListener, PokeAdapter.OnPokemonListener {
 
     private EditText catchPokeText;
     private Button catchButton;
@@ -44,6 +45,8 @@ public class StorageActivity extends AppCompatActivity implements View.OnClickLi
 
         pokemonList = findViewById(R.id.pokemonList);
         pokemonList.setHasFixedSize(true);
+        pokemonList.setOnClickListener(this);
+
         catchButton.setOnClickListener(this);
 
         layoutManager = new LinearLayoutManager(this);
@@ -54,45 +57,9 @@ public class StorageActivity extends AppCompatActivity implements View.OnClickLi
 
         trainer = main.getTrainer(user);
 
-        adapter = new PokeAdapter();
+        adapter = new PokeAdapter(this);
         pokemonList.setAdapter(adapter);
 
-        /*
-        new Thread(
-
-                ()->{
-                    Gson gson = new Gson();
-                    HTTPSWebUtilDomi utilDomi = new HTTPSWebUtilDomi();
-                    String json = utilDomi.GETrequest("https://pokeapi.co/api/v2/pokemon/ditto");
-                            //+catchPokeText.getText().toString().toLowerCase());
-                    Pokemon pokemon = gson.fromJson(json, Pokemon.class);
-
-                    System.out.println(pokemon.getName());
-                    System.out.println(pokemon.getSprites().getFront_default());
-                    Log.e(">>>", pokemon.getName());
-                    //Log.e(">>>", pokemon.getSprites().getFront_default());
-
-                    runOnUiThread(()->{
-
-                    });
-                }
-
-        ).start();*/
-
-/*        catchButton.setOnClickListener(
-                (v) -> {
-                    String poke = catchPokeText.getText().toString();
-
-                    //trainer.addPokemon(adapter.);
-
-                }
-        );*/
-
-/*        searchButton.setOnClickListener(
-                (v) -> {
-
-                }
-        );*/
     }
 
     @Override
@@ -109,17 +76,24 @@ public class StorageActivity extends AppCompatActivity implements View.OnClickLi
 
                             Log.e(">>>", pokemon.getName());
                             Log.e(">>>", pokemon.getSprites().getFront_default());
+                            Log.e(">>>", pokemon.getTypes()[0].getType().getName());
 
                             runOnUiThread(()->{
+                                trainer.addPokemon(pokemon);
                                 adapter.addPoke(pokemon);
                             });
                         }
 
                 ).start();
 
-                //adapter.addPoke(pokemon);
-
                 break;
         }
+    }
+
+    @Override
+    public void onPokemonClick(int position) {
+        Intent intent = new Intent(this, PokemonActivity.class);
+        intent.putExtra("pokemon", trainer.getPokemon().get(position));
+        startActivity(intent);
     }
 }

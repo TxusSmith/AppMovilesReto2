@@ -1,6 +1,9 @@
 package com.example.pokestorage_reto_2.model.pokemon;
 
-public class Pokemon {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Pokemon implements Parcelable {
 
     private int id;
     private String name;
@@ -20,6 +23,26 @@ public class Pokemon {
         this.types = types;
         this.stats = stats;
     }
+
+    protected Pokemon(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        sprites = in.readParcelable(Sprites.class.getClassLoader());
+        types = in.createTypedArray(Types.CREATOR);
+        stats = in.createTypedArray(Stats.CREATOR);
+    }
+
+    public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {
+        @Override
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        @Override
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -59,5 +82,21 @@ public class Pokemon {
 
     public void setStats(Stats[] stats) {
         this.stats = stats;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(sprites, flags);
+        dest.writeTypedArray(types, flags);
+        dest.writeTypedArray(stats, flags);
+        dest.writeInt(id);
+        dest.writeString(name);
+
     }
 }

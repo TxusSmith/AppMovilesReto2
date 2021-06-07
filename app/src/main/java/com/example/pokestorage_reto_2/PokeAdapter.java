@@ -18,10 +18,13 @@ import java.util.ArrayList;
 public class PokeAdapter extends RecyclerView.Adapter<PokemonView> {
 
     private ArrayList<Pokemon> pokemon;
+    private OnPokemonListener onPokemonListener;
 
-    public PokeAdapter(){
+
+    public PokeAdapter(OnPokemonListener onPokemonListener){
+        this.onPokemonListener=onPokemonListener;
         pokemon = new ArrayList<>();
-        pokemon.add(new Pokemon(25,"pikachu", new Sprites("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"),new Types[1], new Stats[5]));
+        //pokemon.add(new Pokemon(25,"pikachu", new Sprites("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"),new Types[1], new Stats[5]));
     }
 
     public void addPoke(Pokemon poke){
@@ -36,7 +39,7 @@ public class PokeAdapter extends RecyclerView.Adapter<PokemonView> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View row = inflater.inflate(R.layout.pokerow,parent,false);
         ConstraintLayout rowroot = (ConstraintLayout) row;
-        PokemonView pokemonView = new PokemonView(rowroot);
+        PokemonView pokemonView = new PokemonView(rowroot,onPokemonListener);
 
         return pokemonView;
     }
@@ -51,6 +54,10 @@ public class PokeAdapter extends RecyclerView.Adapter<PokemonView> {
     @Override
     public int getItemCount() {
         return pokemon.size();
+    }
+
+    public interface OnPokemonListener{
+        void onPokemonClick(int position);
     }
 
 }
