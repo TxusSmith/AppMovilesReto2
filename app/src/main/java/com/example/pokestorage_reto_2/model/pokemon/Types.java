@@ -1,0 +1,21 @@
+package com.example.pokestorage_reto_2.model.pokemon;
+
+public class Types {
+
+    private Type type;
+
+    public Types() {
+    }
+
+    public Types(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+}

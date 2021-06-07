@@ -1,0 +1,2 @@
+rootProject.name = "pokestorage_reto_2"
+include ':app'
