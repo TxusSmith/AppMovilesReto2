@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ernesto_reto_2">
         <activity android:name=".PokemonActivity"></activity>
-        <activity android:name=".StorageActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".StorageActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".MainActivity" android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
